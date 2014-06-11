@@ -1,0 +1,44 @@
+\section{Risoluzione di ricorrenze}
+
+\subsection{Metodo di sostituzione}
+
+Per capire il metodo di sostituzione proviamo a risolvere il seguente esercizio:
+\linebreak
+\linebreak
+La ricorrenza $T(n)=4T(n/2)+n^2\log n$ si può risolvere con il metodo dell'esperto? Giustificare la risposta. Se la risposta è negativa usare il metodo di sostituzione per dimostrare che $T(n)=O(n^2\log^2n)$.
+\linebreak
+\linebreak
+Anzitutto vediamo i dati a disposizione:
+
+$$a = 4, b = 2$$ 
+$$f(n)=n^2\log n$$
+$$g(n)=n^{\log_{b}a}=n^{\log_{2}4}=n^2$$
+
+Calcoliamo ora il limite:
+
+$$\lim_{n \to +\infty}\frac{n^2\log n}{n^2}=\infty$$
+
+Da cui deduco che:
+
+$$f(n)=\Omega(n^2)$$
+
+Potrei dunque essere nel caso 3. Devo trovare un $$\epsilon > 0$$  tale che:
+
+$$\lim_{n \to +\infty}\frac{n^2\log n}{n^{2+\epsilon}}\neq0$$
+
+Ma mi accorgo subito che la cosa è impossibile, in quanto il denominatore, incrementando l'esponente, crescerà molto più velocemente rispetto al numeratore, per cui avrò sempre un valore tendente allo zero. Da questa considerazione deduco che la ricorrenza \textbf{non è risolvibile con il metodo dell'esperto}.
+\linebreak
+\linebreak
+Procedo dunque con la sostituzione. Proviamo $T(n)=O(n^2\log^2n)$. Assumiamo che per un'opportuna costante $C>1$ e $\forall x<n$ sia verificata la disuguaglianza $T(x)\le C(x^2\log^2x)$ e dimostriamo che vale anche per $n$:
+
+$$T(n)=4T(n/2)+n^2\log n \le 4C(n/2)^2\log^2(n/2)+n^2\log n$$
+$$=Cn^2(\log n -1)^2+n^2\log n$$
+$$=Cn^2(\log^2n-2\log n+1)+n^2\log n$$
+$$=Cn^2\log^2n-2Cn^2\log n +Cn^2\log n+Cn^2+n^2\log n$$
+$$=Cn^2\log^2n-(C-1)n^2\log n-Cn^2(\log n -1)$$
+
+Ora applico una \textbf{maggiorazione}:
+
+$$\le Cn^2\log^2n$$
+
+Dunque ho dimostrato che: $T(n)=O(n^2\log^2n)$
