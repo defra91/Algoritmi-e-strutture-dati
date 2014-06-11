@@ -1,0 +1,31 @@
+\section{Programmazione dinamica}
+
+In maniera del tutto generale la programmazione dinamica può essere descritta nel seguente modo:
+
+\begin{enumerate}
+
+\item Identifichiamo dei \textbf{sottoproblemi} del problema originario e utilizziamo una \textit{tabella} per memorizzare i risultati intermedi;
+\item Inizialmente vanno definiti i \textbf{valori iniziali} di alcuni elementi della tabella, corrispondenti a sottoproblemi più semplici;
+\item Al generico passo, avanziamo in modo opportuno sulla tabella calcolando il valore della soluzione di un sottoproblema in base alla soluzione di sottoproblemi precedentemente risolti (corrispondenti ad elementi della tabella precedentemente calcolati);
+\item Alla fine restituiamo la soluzione del problema originario, che è stato memorizzato in un particolare elemento della tabella.
+
+\end{enumerate}
+
+La programmazione dinamica è usata normalmente per \textbf{problemi di ottimizzazione}, il termine ``programmazione'' si riferisce al metodo tabulare, non alla scrittura di codice.
+\linebreak
+\linebreak
+La programmazione è applicabile con vantaggi se:
+
+\begin{itemize}
+
+\item Gode della proprietà di \textbf{sottostruttura ottima}: una soluzione si può costruire a partire da soluzioni ottime di sottoproblemi;
+\item Il numero di sottoproblemi distinti è molto minore del numero di soluzioni possibili tra cui cercare quella ottima, altrimenti c'è la \textbf{ripetizione di sottoproblemi}, ovvero se il numero di sottoproblemi distinti è molto minore del numero di soluzioni possibili tra cui cercare quella ottima, allora uno stesso sottoproblema deve comparire molte volte come sottoproblema di altri sottoproblemi.
+
+\end{itemize}
+
+\subsection*{Ordine di calcolo delle soluzioni dei sottoproblemi}
+
+\textbf{Bottom-up}: le soluzioni dei sottoproblemi del problema in esame sono già state calcolate. È il metodo migliore se per il calcolo della soluzione globale servono le soluzioni di tutti i sottoproblemi.
+\linebreak
+\linebreak
+\textbf{Top-down}: è una procedura ricorsiva che dall'alto scende verso il basso. È la soluzione migliore se per il calcolo della soluzione globale servono soltanto alcune delle soluzioni dei sottoproblemi.
