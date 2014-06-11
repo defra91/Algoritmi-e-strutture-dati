@@ -1,0 +1,177 @@
+\section{Stima della complessità di un algoritmo}
+
+Identifichiamo dei casi base, studiando la complessità degli algoritmi noti.
+
+\begin{enumerate}
+
+\item Le operazioni elementari, messe al di fuori dei cicli, e che riguardano l'uso di variabili hanno complessità costante $c_i$, aprossimabile a 0 nello studio della complessità asintotica;
+
+\item Da \textit{insertion-sort} si vede che un \textit{for i = 2 to n} ha complessità pari a $n$. Constatiamo dunque che un ciclo for che va dall'indice $1$ all'indice $n$ avrà complessità $c_i(n+1)$;
+
+\item Tutte le operazioni elementari che compaiono all'interno di un ciclo for di complessità $c_i(n+1)$ hanno complessità $c_in$;
+
+\item Per i cicli annidati in altri cicli a complessità è data da $c_i\sum_{j=x}^{n}(c_j)$, dove gli estremi della sommatoria sono gli estremi del del ciclo esterno.
+
+\end{enumerate}
+
+Per valutare la complessità si scrive l'equazione $T(n)$ sommando tutte le complessità. Per studiare le sommatorie si utilizza il \textbf{metodo dell'integrale}.
+
+\subsection{Metodo dell'integrale}
+
+Se $f(x)$ è una funzione \textbf{non decrescente}:
+
+$$\int_a^{b+1} f(x)\mathrm{d}x\le \sum_{i=a}^b f(i) \le \int_{a-1}^{b+1} f(x)\mathrm{d}x$$
+
+Se $f(x)$ è una funzione \textbf{non decrescente}:
+
+$$\int_a^{b+1} f(x)\mathrm{d}x \le \sum_{i=a}^b f(i) \le \int_{a-1}^b f(x)\mathrm{d}x$$
+
+Inoltre riportiamo di seguito le comuni sommatorie:
+
+\begin{itemize}
+
+\item \textbf{Serie aritmetica}: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$;
+\item \textbf{Serie geometrica}: $\sum_{i=0}^k q^i = \frac{q^{k+1}-1}{q-1}$ \hfill $q\neq1$
+
+\end{itemize}
+
+\subsection{Andamento asintotico}
+
+Una volta ottenuta una funzione che rappresenta la complessità dell'algoritmo ci può interessare prendere in esame l'andamento asintotico della medesima. Per farlo introduciamo le seguenti notazioni:
+
+\begin{itemize}
+
+\item \textbf{``$O$'' grande}: date due funzioni $f(n)$ e $g(n)$ si dice che $f(n)$ è ``$O$'' grande di $g(n)$ se esiste un $c>0$ e un $h_0$ tali che: 
+
+$$f(n)\le cg(n)$$ 
+
+per $n\ge h_0$ (\textbf{limite asintotico superiore}). In pratica l'ordine di crescita di $f(n)$ è non superiore a quello di $g(n)$;
+
+\item \textbf{``$\Omega$'' grande}: date $f(n)$ e $g(n)$ si dice che $f(n)$ è ``$\Omega$'' grande di $g(n)$ se esiste una costante $c>0$ e un $h_0$ tale che:
+
+$$f(n)\ge cg(n)$$ 
+
+per $n\ge h_0$ (\textbf{limite asintotico inferiore}). In pratica l'ordine di crescita di $f(n)$ è non inferiore a quello di $g(n)$;
+
+\item \textbf{``$\Theta$'' grande}: date $f(n)$ e $g(n)$ si dice che $f(n)$ è ``$\Theta$'' grande di $g(n)$ se ci sono costanti positive $c_1$, $c_2$ e un $h_0$ tali che:
+
+$$c_1g(n)\le f(n) \le c_2g(n)$$
+
+per $n\ge h_0$ (\textbf{limite asintotico stretto}). In pratica diciamo che se $f(n)=O(g(n))$ e $f(n)=\Omega(g(n))$ allora è vero anche che $f(n)=\Theta(g(n))$
+
+\end{itemize}
+
+Di una funzione non ci interessa la sua forma ma il suo comportamento asintotico. Spesso è possibile determinare dei limiti asintotici calcolando il limite di un rapporto:
+
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)}$$
+
+In base al risultato di questo limite ho tre casi:
+
+\begin{enumerate}
+
+\item Ottengo un valore costante $k>0$: in questo caso $f(n)$ è dello stesso ordine di $g(n)$, e dunque:
+
+$$\forall \epsilon>0, \exists h_0 | h\ge h_0 : k-\epsilon \le f(n)/g(n)\le k+\epsilon$$
+
+ponendo:
+
+$$c_1g(n)\le f(n) \le c_2g(n)$$
+
+Dunque concludo dicendo che $f(n)=\Theta(g(n))$;
+
+\item Il limite tende a $\infty$: $f(n)=\Omega(g(n))$;
+\item Il limite tende a $0$: $f(n)=O(g(n))$.
+
+\end{enumerate}
+
+\subsection{Metodo dell'esperto}
+
+Per risolvere le ricorrenze il primo metodo da utilizzare è il \textbf{metodo dell'esperto}. Se la ricorrenza è espressa nella forma:
+
+$$T(n)=aT(n/b)+f(n)$$
+
+e se $a \ge 1$ e $b<1$ allora:
+
+\begin{enumerate}
+
+\item Tolgo eventuali arrotondamenti;
+\item Calcolo $\log_ba$ e calcolo il limite: $\lim_{n \to \infty}\frac{f(n)}{n^{\log_ba}}$;
+
+\end{enumerate}
+
+A questo punto, in base al valore del limite ho 3 possibili casi:
+
+\subsubsection{Caso 2}
+
+Se il limite è \textbf{finito} e diverso da zero:
+
+$$f(n)=\Theta(n^{\log_ba})\Rightarrow T(n)=\Theta(n^{\log_ba}\log n)$$
+
+\subsubsection{Caso 1}
+
+Se il limite è \textbf{uguale a zero} devo trovare un valore $\epsilon > 0$ per il quale risulta finito il limite:
+
+$$\lim_{n \to \infty}\frac{f(n)}{n^{\log_ba-\epsilon}}=k$$
+
+Se lo trovo allora posso affermare che:
+
+$$f(n)=O(n^{\log_ba-\epsilon}) \Rightarrow T(n)=\Theta(n^{\log_ba})$$
+
+\subsubsection{Caso 3}
+
+Se il limite è $\int$ allora devo trovare un $\epsilon >0$ per il quale risulti:
+
+$$\lim_{n \to \infty}\frac{f(n)}{n^{\log_ba+\epsilon}}\neq 0$$
+
+Se lo trovo allora devo studiare l'equazione:
+
+$$af(n/b)\le k(f(n))$$
+
+se trovo un $k<1$ allora posso concludere che:
+
+$$f(n)=\Omega(n^{\log_ba+\epsilon})\Rightarrow T(n)=\Theta(f(n))$$
+
+\subsection{Metodo di sostituzione}
+
+Se non riesco ad applicare il metodo dell'esperto allora devo utilizzare il \textbf{metodo di sostituzione}.
+
+Per capire il metodo di sostituzione proviamo a risolvere il seguente esercizio:
+\linebreak
+\linebreak
+La ricorrenza $T(n)=4T(n/2)+n^2\log n$ si può risolvere con il metodo dell'esperto? Giustificare la risposta. Se la risposta è negativa usare il metodo di sostituzione per dimostrare che $T(n)=O(n^2\log^2n)$.
+\linebreak
+\linebreak
+Anzitutto vediamo i dati a disposizione:
+
+$$a = 4, b = 2$$ 
+$$f(n)=n^2\log n$$
+$$g(n)=n^{\log_{b}a}=n^{\log_{2}4}=n^2$$
+
+Calcoliamo ora il limite:
+
+$$\lim_{n \to +\infty}\frac{n^2\log n}{n^2}=\infty$$
+
+Da cui deduco che:
+
+$$f(n)=\Omega(n^2)$$
+
+Potrei dunque essere nel caso 3. Devo trovare un $$\epsilon > 0$$  tale che:
+
+$$\lim_{n \to +\infty}\frac{n^2\log n}{n^{2+\epsilon}}\neq0$$
+
+Ma mi accorgo subito che la cosa è impossibile, in quanto il denominatore, incrementando l'esponente, crescerà molto più velocemente rispetto al numeratore, per cui avrò sempre un valore tendente allo zero. Da questa considerazione deduco che la ricorrenza \textbf{non è risolvibile con il metodo dell'esperto}.
+\linebreak
+\linebreak
+Procedo dunque con la sostituzione. Proviamo $T(n)=O(n^2\log^2n)$. Assumiamo che per un'opportuna costante $C>1$ e $\forall x<n$ sia verificata la disuguaglianza $T(x)\le C(x^2\log^2x)$ e dimostriamo che vale anche per $n$:
+
+$$T(n)=4T(n/2)+n^2\log n \le 4C(n/2)^2\log^2(n/2)+n^2\log n$$
+$$=Cn^2(\log n -1)^2+n^2\log n$$
+$$=Cn^2(\log^2n-2\log n+1)+n^2\log n$$
+$$=Cn^2\log^2n-2Cn^2\log n +Cn^2\log n+Cn^2+n^2\log n$$
+$$=Cn^2\log^2n-(C-1)n^2\log n-Cn^2(\log n -1)$$
+
+Ora applico una \textbf{maggiorazione}:
+
+$$\le Cn^2\log^2n$$
+
+Dunque ho dimostrato che: $T(n)=O(n^2\log^2n)$
