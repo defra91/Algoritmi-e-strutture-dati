@@ -26,12 +26,29 @@ Se $f(x)$ è una funzione \textbf{non decrescente}:
 
 $$\int_a^{b+1} f(x)\mathrm{d}x \le \sum_{i=a}^b f(i) \le \int_{a-1}^b f(x)\mathrm{d}x$$
 
-Inoltre riportiamo di seguito le comuni sommatorie:
+\subsubsection{Integrali immediati}
 
 \begin{itemize}
 
-\item \textbf{Serie aritmetica}: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$;
-\item \textbf{Serie geometrica}: $\sum_{i=0}^k q^i = \frac{q^{k+1}-1}{q-1}$ \hfill $q\neq1$
+\item $\int[f(x)]^\alpha f'(x) \mathrm{d}x=\frac{[f(x)]^{\alpha+1}}{(\alpha+1)}+C$ \hfill $\alpha \neq 1$
+\item $\int \frac{f'(x)}{f(x)}\mathrm{d}x=\log |f(x)|+C$
+\item $\int f'(x)e^{f(x)}\mathrm{d}x=e^{f(x)}+C$
+\item $\int f'(x)a^{f(x)}\mathrm{d}x=a^{f(x)}\log_ae+C$
+
+\end{itemize}
+
+\subsubsection{Integrazione per parti}
+
+Siano $f, g, g'$ continue nell'intervallo $[a,b]$ e sia $\gamma$ una primitiva di $f$, allora:
+
+$$\int f(x)g(x)\mathrm{d}x=\gamma(x)g(x)-\int\gamma(x)+g'(x)\mathrm{d}x$$
+
+\subsubsection{Serie aritmetica e geometrica}
+
+\begin{itemize}
+
+\item Serie aritmetica: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$;
+\item Serie geometrica: $\sum_{i=0}^k q^i = \frac{q^{k+1}-1}{q-1}$ \hfill $q\neq1$
 
 \end{itemize}
 

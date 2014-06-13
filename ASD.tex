@@ -100,19 +100,20 @@
 \newcommand{\glossario}[1]{\textit{#1\ped{G}}}
 
 \lstset{frame=shadowbox,
-  aboveskip=3mm,
-  belowskip=3mm,
+  language=c++,
+  aboveskip=10mm,
+  belowskip=10mm,
   showstringspaces=false,
   columns=flexible,
   basicstyle={\small\ttfamily},
   numbers=none,
   numberstyle=\tiny\color{gray},
   keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
   breaklines=true,
   breakatwhitespace=true
-  tabsize=3
+  tabsize=1
 }
 
 \renewcommand{\lstlistingname}{Listato}
@@ -137,7 +138,6 @@
 %----------------------------------------------------------------------------------------
 
 \begin{document}
-\justifying
 \titleAT % This command includes the title page
 \pagestyle{empty}
 \newpage
@@ -165,8 +165,11 @@
 %	CONTENT
 %----------------------------------------------------------------------------------------
 
+\raggedright
+
 \include{complessita}
 \include{programmazione-dinamica}
+\include{analisi-ammortizzata}
 
 %\appendix
 
