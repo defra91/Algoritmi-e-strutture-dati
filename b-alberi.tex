@@ -187,3 +187,108 @@ La cancellazione di una chiave da un B-albero è analoga all'inserimento, ma un 
 	\item Se $x.c_i$ ed entrambi i fratelli adiacenti di $x.c_i$ hanno $t-1$ chiavi, fondere $x.c_i$ con un fratello in un nuovo nodo; questo richiede che una chiave venga spostata in basso da $x$ nel nuovo nodo per diventare la chiave mediana di questo nodo.
 	\end{enumerate}
 \end{enumerate}
+
+\subsection{Esercizi}
+
+\subsubsection{Esercizio 1}
+
+Mostrare come sia possibile aggiungere ad ogni nodo interno $x$ di un B-albero i campi $x.size_i$ che contengono il numero di chiavi presenti nei sottoalberi di radici $x.c_i$. Dire quali sono le modifiche da apportare a Insert e Delete. Assicurarsi che la complessità asintotica non aumenti.
+\linebreak
+\linebreak
+\textbf{Soluzione}: Sia $x$ un nodo interno e sia $y=x.c_i$ figlio di $x$. Vale la seguente formula:
+
+$$
+x.size_i=
+\begin{cases}
+y.n, & y foglia \\
+y.n+\sum_{j=1}^{y.n+1}y.size_j & altrimenti
+\end{cases}
+$$
+
+Insert percorre un cammino dalla radice fino alla foglia in cui si deve inserire la nuova chiave. Prima di scendere da un nodo $x$ al figlio $x.c_i$ aumentiamo $x.size_i$ di 1.
+
+Quando eseguiamo una SplitChil(x,i,$x.c_i$) dobbiamo ricalcolare sia $x.size_i$ che $x.size_{i+1}$ usando la formula precedente.
+
+Delete percorre un cammino dalla radice fino alla foglia da cui viene rimossa o la chiave data o la successiva. Prima di scendere da un nodo $x$ al figlio $x.c_i$ diminuiamo $x.size_i$ di 1.
+
+Quando eseguiamo una AugmentChild dobbiamo usare la formula precedente per ricalcolare i campi $x.size_i$ relativi ai figli che vengono modificati.
+
+\subsubsection{Esercizio 2}
+
+Aumentare la struttura dati B-albero aggiungendo ad ogni nodo $x$ i campi $x.sumkey_i=1,...,x.n+1$ che contengono la somma delle chiavi presenti nel sottoalbero di radice $x.c_i$. Dire quali modifiche occorre apportare alle operazioni Insert e Delete per mantenere aggiornati tali campi senza aumentare la complessità asintotica di tali operazioni.
+\linebreak
+\linebreak
+\textbf{Soluzione}: sia $x$ un nodo interno e sia $y=x.c_i$ figlio di $x$. Vale la seguente formula:
+
+$$x.sumkey_i=
+\begin{cases}
+\sum_{j=1}^{y.n}y.key_j & y foglia \\
+\sum_{j=1}^{y.n}y.key_j+\sum_{j=1}^{y.n+1}y.sumkey_j & altrimenti
+\end{cases}
+$$
+
+Insert percorre un cammino dalla radice fino alla foglia in cui si deve inserire la nuova chiave. Prima di scendere da un nodo $x$ al figlio $x.c_i$, aumentiamo $x-.sumkey_i$ del valore della chiave che si vuole inserire.
+
+Quando eseguiamo una SplitChild(x,i,$x.c_i$) dobbiamo ricalcolare sia $x.sumkey_i$ che $x.sumkey_{i+1}$ usando la formula precedente.
+
+Delete percorre un cammino dalla radice fino alla foglia da cui viene rimossa o la chiave data o la successiva. Prima di scendere da un nodo $x$ al figlio $x.c_i$ diminuiamo $x.sumkey_i$ del valore della chiave da cancellare.
+
+Quando eseguiamo una AugmentChild(x,i,$x.c_i$) dobbiamo usare la formula precedente per ricalcolare i campi $x.sumkey_i$ relativi ai figli che vengono modificati.
+
+\subsubsection{Esercizio 3}
+
+Aumentare la struttura dati B-albero aggiungendo ad ogni nodo $x$ i campi $x.maxkey_i$, $i=1,...,x.n+1$ che contengono la massima chiave presente nel sottoalbero di radice $x.c_i$. Dire quali modifiche occorre apportare alle operazioni Insert e Delete per mantenere aggiornati tali campi senza aumentare la complessità asintotica di tali operazioni.
+\linebreak
+\linebreak
+\textbf{Soluzione}: Sia $x$ un nodo interno e sia $y=x.c_i$ figlio di $x$. Vale la seguente formula:
+
+$$
+x.maxkey_i=
+\begin{cases}
+
+max_{1\le i \le y.n}(y.key_i) & y foglia \\
+max(max_{1\le j \le y.n}(y.key_j)) \\
+max_{1\le h \le y.n+1}(y.maxkey_h) & altrimenti
+
+\end{cases}
+$$
+
+Insert percorre un cammino dalla radice fino alla foglia in cui si deve inserire la nuova chiave. Prima di scendere da un nodo $x$ al figlio $x.c_i$, confrontiamo $x.maxkey_i$ con il valore della chiave che si vuole inserire.
+
+Quando eseguiamo una SplitChild(x,i,$x.c_i$) dobbiamo ricalcolare sia $x.maxkey_i$ che $x.maxkey_{i+1}$ usando la formula precedente.
+
+Delete percorre un cammino dalla radice fino alla foglia da cui viene rimossa o la chiave data o la successiva. Al ritorno dalla chiamata ricorsiva da nodo $x$ al figlio $x.c_i$ ricalcoliamo $x.maxkey_i$ se si deve cancellare proprio $x.maxkey_i$.
+
+Quando eseguiamo una AugmentChild(x,i,x,$c_i$) dobbiamo usare la formula precedente per ricalcolare i campi $x.maxkey_i$ relativi ai figli che vengono modificati.
+
+\subsubsection{Esercizio 4}
+
+Scrivere una funzione Search che dato un B-albero $T$ ed un valore $v$ cerca la minima chiave $k>v$. La funzione deve ritornare il puntatore al nodo che contiene la chiave $k$ e la posizione di tale chiave nel nodo. Deve ritornare $nil$ se $T$ non contiene alcuna chiave maggiore di $v$.
+\linebreak
+\linebreak
+\textbf{Soluzione}:
+
+\begin{lstlisting}[mathescape=true]
+
+Search(x,v)
+	i = 1
+	while i $\le$ n and $x.key_i \le v$
+		i = i+1
+	if i == x.n+1
+		if $x.c_i$ == nil
+			return nil
+		else
+			DiskRead($x.c_i$)
+			return Search($x.c_i$,v)
+	else // $x.key_i$ > v
+		if $x.c_i$ == nil
+			return (x, i)
+		else
+			DiskRead($x.c_i$)
+			(y, j) = Search($x.c_i$, v)
+			if y == nil
+				return (x, i)
+			else
+				return (y, j)
+
+\end{lstlisting}
