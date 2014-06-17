@@ -353,3 +353,167 @@ ed il costo ammortizzato di FindSet è:
 
 $$\hat{c}=c+\Delta\Phi_i\le s-s+\alpha(n)+2=O(\alpha(n))$$
 
+\subsection{Esercizi}
+
+\subsubsection{Esercizio 1}
+
+La funzione FindSet(x) ricerca il rappresentante in una struttura dati per insiemi disgiunti ed effettua la compressione dei cammini viene normalmente definita ricorsivamente come segue:
+
+\begin{lstlisting}[mathescape=true]
+
+FindSet(x)
+	if x.p $\neq$ x
+		x.p = FindSet(x.p)
+	return x.p
+
+\end{lstlisting}
+
+Scrivere una versione \textbf{non ricorsiva} efficiente di tale funzione e spiegare la differenza tra le compressioni dei cammini ottenute con le due versioni.
+\linebreak
+\linebreak
+\textbf{Soluzione}:
+
+\begin{lstlisting}[mathescape=true]
+
+FindSet(x)
+	y = x
+	while y.p $\neq$ y
+		y = y.p
+	// y è ora il rappresentante
+	z = x
+	while z.p $\neq$ z
+		w = z.p
+		z.p = y
+		z = w
+	return z
+
+\end{lstlisting}
+
+\subsubsection{Esercizio 2}
+
+La funzione FindSet(x) ricerca il rappresentante in una struttura dati per insiemi disgiunti ed effettua la compressione dei cammini viene normalmente definita ricorsivamente come segue:
+
+\begin{lstlisting}[mathescape=true]
+
+FindSet(x)
+	if x.p $\neq$ x
+		x.p = FindSet(x.p)
+	return x.p
+
+\end{lstlisting}
+
+La ricerca del rappresentante e la compressione del cammino si può effettuare anche utilizzando la seguente versione non ricorsiva:
+
+\begin{lstlisting}[mathescape=true]
+
+FindSet(x)
+	y = x
+	ys = y.p
+	while ys $\neq$ y
+		y.p = ys.p
+		y = ys
+		ys = y.p
+	return y
+
+\end{lstlisting}
+
+Entrambe le versioni effettuano una compressione dei cammini. Spiegare la differenza tra le compressioni dei cammini ottenute con le due versioni.
+\linebreak
+\linebreak
+\textbf{Soluzione}: La differenza nella compressione dei cammini tra le due versioni è che quella ricorsiva collega tutti i nodi che percorre alla radice, comprimendo tutti i loro cammini, mentre la versione iterativa divide in due l'albero, collegando i nodi alternativamente tra loro. In questo modo, l'altezza dell'albero diventa $O(\ceil{\frac{n+1}{2}})$, riducendo effettivamente la lunghezza dei cammini per arrivare al rappresentante.
+
+\subsubsection{Esercizio 3}
+
+Modificare la struttura dati foresta di insiemi disgiunti in modo da poter eseguire in modo efficiente, oltre alle operazioni MakeSet(x), Union(x,y) e FindSet(x), anche l'operazione NumSet(x) che restituisce il numero di elementi dell'insieme a cui appartiene $x$. Scrivere lo pseudo-codice di NumSet(x) e di MakeSet(x), Union(x,y) e FindSet(x) opportunamente modificate.
+\linebreak
+\linebreak
+\textbf{Soluzione}: risolviamo l'esercizio aggiungendo un campo $x.n$ al rappresentante $x$ dell'insieme.
+
+\begin{lstlisting}
+
+MakeSet(x)
+	x.p = x
+	x.n = 1
+
+\end{lstlisting}
+
+\begin{lstlisting}
+
+Union(x,y)
+	x = FindSet(x)
+	y = FindSet(y)
+	Link(x,y)
+
+\end{lstlisting}
+
+\begin{lstlisting}
+
+Link(x,y)
+	if x.rank > y.rank
+		y.p = x
+		x.n = x.n+y.n
+	else
+		x.p = y
+		y.n = x.n+y.n
+		if x.rank == y.rank
+			y.rank = y.rank+1
+
+\end{lstlisting}
+
+\begin{lstlisting}
+
+NumSet(x)
+	return FindSet(x).n
+
+\end{lstlisting}
+
+La funzione FindSet(x) non ha bisogno di modifiche rispetto all'originale.
+
+\subsubsection{Esercizio 4}
+
+Modificare la struttura dati foresta di insiemi disgiunti in modo da poter eseguire in modo efficiente, oltre alle operazioni MakeSet(x), Union(x,y) e FindSet(x), anche l'operazione MaxSet(x) che restituisce l'elemento con chiave massima dell'insieme a cui appartiene $x$. Scrivere lo pseudo-codice di NumSet(x) e di MakeSet(x), Union(x,y) e FindSet(x) opportunamente modificate.
+\linebreak
+\linebreak
+\textbf{Soluzione}: risolviamo l'esercizio aggiungendo $x.max$ al rappresentante $x$ dell'insieme.
+
+\begin{lstlisting}
+
+MakeSet(x)
+	x.p = x
+	x.max = x
+
+\end{lstlisting}
+
+\begin{lstlisting}
+	
+Union(x,y)
+	x = FindSet(x)
+	y = FindSet(y)
+	Link(x,y)
+
+\end{lstlisting}
+
+\begin{lstlisting}
+
+Link(x,y)
+	if x.rank > y.rank
+		y.p = x
+		if y.max.info > x.max.info
+			x.max = y.max
+	else
+		x.p = y
+		if x.max.info > y.max.info
+			y.max = x.max
+		if x.rank == y.rank
+			y.rank = y.rank+1
+
+\end{lstlisting}
+
+\begin{lstlisting}
+
+NumSet(x)
+	return FindSet(x).max
+
+\end{lstlisting}
+
+La funzione FindSet non ha bisogno di modifiche rispetto all'originale.
